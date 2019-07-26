@@ -1,0 +1,2 @@
+export const ETCD_CLIENT = 'ETCD_CLIENT'
+export const ETCD_MODULE_OPTIONS = 'ETCD_MODULE_OPTIONS'
