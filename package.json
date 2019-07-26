@@ -20,11 +20,9 @@
   },
   "dependencies": {
     "@nestjs/common": "6.3.1",
-    "@types/uuid": "^3.4.4",
     "etcd3": "^0.2.13",
     "reflect-metadata": "^0.1.12",
-    "rxjs": "^6.2.2",
-    "uuid": "^3.3.2"
+    "rxjs": "^6.2.2"
   },
   "devDependencies": {
     "@nestjs/testing": "6.3.1",
