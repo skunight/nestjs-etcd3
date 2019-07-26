@@ -8,22 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var EtcdModule_1;
 const common_1 = require("@nestjs/common");
-const etcd_client_provider_1 = require("./etcd.client.provider");
-const etcd_constants_1 = require("./etcd.constants");
-const etcd_service_1 = require("./etcd.service");
+const etcd_core_module_1 = require("./etcd.core.module");
 let EtcdModule = EtcdModule_1 = class EtcdModule {
     static root(options) {
         return {
             module: EtcdModule_1,
-            providers: [
-                etcd_client_provider_1.createClient(),
-                {
-                    provide: etcd_constants_1.ETCD_MODULE_OPTIONS,
-                    useValue: options,
-                },
-                etcd_service_1.EtcdService,
-            ],
-            exports: [etcd_service_1.EtcdService]
+            imports: [etcd_core_module_1.EtcdCoreModule.root(options)],
         };
     }
 };
