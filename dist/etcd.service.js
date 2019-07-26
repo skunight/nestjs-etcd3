@@ -19,8 +19,13 @@ let EtcdService = class EtcdService {
     constructor(client) {
         this.client = client;
     }
-    getClient() {
-        return this.client;
+    getClient(namespace) {
+        if (namespace) {
+            return this.client.namespace(namespace);
+        }
+        else {
+            return this.client;
+        }
     }
 };
 EtcdService = __decorate([
