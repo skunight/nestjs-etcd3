@@ -17,11 +17,11 @@ export class EtcdService extends EventEmitter {
     }
   }
 
-  async watch(key: string, handler: any): Promise<void> {
+  async watch(key: string, handler: (res: string) => void): Promise<void> {
     if (!this.watchMap.has(key)) {
       this.watchMap.set(key, 1)
       const watchBuilder = await this.client.watch().key(key).create()
-      watchBuilder.on('put', (res) => { this.emit(key, res.value) })
+      watchBuilder.on('put', (res) => { this.emit(key, res.value.toString()) })
     } 
     this.on(key, handler)
   }

@@ -5,5 +5,5 @@ export declare class EtcdService extends EventEmitter {
     private readonly watchMap;
     constructor(client: Etcd3);
     getClient(namespace?: string): Namespace;
-    watch(key: string, handler: any): Promise<void>;
+    watch(key: string, handler: (res: string) => void): Promise<void>;
 }

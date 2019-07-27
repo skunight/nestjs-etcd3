@@ -43,7 +43,7 @@ let EtcdService = class EtcdService extends events_1.EventEmitter {
             if (!this.watchMap.has(key)) {
                 this.watchMap.set(key, 1);
                 const watchBuilder = yield this.client.watch().key(key).create();
-                watchBuilder.on('put', (res) => { this.emit(key, res.value); });
+                watchBuilder.on('put', (res) => { this.emit(key, res.value.toString()); });
             }
             this.on(key, handler);
         });
