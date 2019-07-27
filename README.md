@@ -32,6 +32,11 @@ import { EtcdModule} from 'nestjs-etcd3'
 })
 export class AppModule {}
 ```
+EtcdService Api
+```
+getClient(namespace?:string): NameSpace //get a etcd client
+watch(key:string): Observable<string>   //return a Observable<string>
+```
 Options
 ```typescript
 interface EtcdModuleOptions {

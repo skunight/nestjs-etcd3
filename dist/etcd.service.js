@@ -23,10 +23,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const etcd_constants_1 = require("./etcd.constants");
 const etcd3_1 = require("etcd3");
-const events_1 = require("events");
-let EtcdService = class EtcdService extends events_1.EventEmitter {
+const rxjs_1 = require("rxjs");
+let EtcdService = class EtcdService {
     constructor(client) {
-        super();
         this.client = client;
         this.watchMap = new Map();
     }
@@ -38,15 +37,21 @@ let EtcdService = class EtcdService extends events_1.EventEmitter {
             return this.client;
         }
     }
-    watch(key, handler) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!this.watchMap.has(key)) {
-                this.watchMap.set(key, 1);
+    watch(key) {
+        if (!key || key.trim() === '') {
+            throw new Error('key is empty');
+        }
+        if (this.watchMap.has(key)) {
+            return this.watchMap.get(key);
+        }
+        else {
+            const observable = rxjs_1.Observable.create((observer) => __awaiter(this, void 0, void 0, function* () {
                 const watchBuilder = yield this.client.watch().key(key).create();
-                watchBuilder.on('put', (res) => { this.emit(key, res.value.toString()); });
-            }
-            this.on(key, handler);
-        });
+                watchBuilder.on('put', (res) => { observer.next(res.value.toString()); });
+            }));
+            this.watchMap.set(key, observable);
+            return observable;
+        }
     }
 };
 EtcdService = __decorate([
